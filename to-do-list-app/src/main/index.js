@@ -6,14 +6,30 @@ import icon from '../../resources/icon.png?asset'
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
+    //numbers are in px, electron uses px as default dimensions
+    width: 400,
+    height: 250,
     show: false,
     autoHideMenuBar: true,
+    //Makes the window frameless
+    frame: false,
+    // Tried using the functions below but the maximize button would bug out and no actions further could be done
+    // // Hides the default title bar on Mac
+    // titleBarStyle: 'hidden',
+    // titleBarOverlay: {
+    //   //Customize the top bar color
+    //   color: '#2f3241',
+    //   //Customize button colors on Mac
+    //   symbolColor: '#74b1be',
+    //   //Height of Top Bar
+    //   height: 30,
+    // },
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
-      sandbox: false
+      //sandBox and contextIsolation provides more security if true
+      sandbox: false,
+      // contextIsolation: true,
     }
   })
 
@@ -35,6 +51,20 @@ function createWindow() {
   }
 }
 
+ipcMain.on('close-window', () => {
+  const currentWindow = BrowserWindow.getFocusedWindow();
+  if (currentWindow) {
+    currentWindow.close()
+  }
+})
+
+ipcMain.on('minimize-window', () => {
+  const currentWindow = BrowserWindow.getFocusedWindow();
+  if (currentWindow) {
+    currentWindow.minimize()
+  }
+})
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
@@ -50,7 +80,7 @@ app.whenReady().then(() => {
   })
 
   // IPC test
-  ipcMain.on('ping', () => console.log('pong'))
+  // ipcMain.on('ping', () => console.log('pong'))
 
   createWindow()
 
