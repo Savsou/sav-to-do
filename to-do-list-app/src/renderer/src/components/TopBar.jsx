@@ -16,7 +16,7 @@ export default function TopBar() {
 
     return (
         <div>
-            <div className="rounded-t-xl bg-blue-400 w-screen h-8"
+            <div id="top-bar" className="rounded-t-xl bg-blue-400 w-screen h-8"
                 style={{ WebkitAppRegion: "drag" }}>
                 <span>Top Bar</span>
             </div>
