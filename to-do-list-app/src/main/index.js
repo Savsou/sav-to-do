@@ -2,6 +2,9 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+//Built-in Node.js module that allows us to interact with the file system on the computer.
+//Used for read from, write to, and manipulate files and directories.
+import fs from 'fs';
 
 function createWindow() {
   // Create the browser window.
@@ -62,6 +65,47 @@ ipcMain.on('minimize-window', () => {
   const currentWindow = BrowserWindow.getFocusedWindow();
   if (currentWindow) {
     currentWindow.minimize()
+  }
+})
+
+//Create functions that would be useful when the todo list is changed. For instance when adding, editing or removing
+//from the todo list. Have the functions happen in a useEffect
+//save todos function, to save into todos.json file in userData directory.
+ipcMain.on('save-todos', (event, todos) => {
+  try {
+    //Get the userData path, which is specific to each platform
+    const userDataPath = app.getPath('userData');
+
+    //create a path for todos.json within userData
+    const filePath = join(userDataPath, 'todos.json');
+    //JSON.stringify(todos, null, 2).  Value (Object to create into a JSON string), Replacer (the properties you want to return to exclude properties), and
+    // Space (indentation to make the JSON easier to read).
+    fs.writeFileSync(filePath, JSON.stringify(todos, null, 2));
+    event.reply('save-todos-success', true);
+  } catch (error) {
+    console.error('Error saving todos.json', error);
+    event.reply('save-todos-error', false);
+  }
+})
+//load todos function, to load from todos.json file.
+ipcMain.handle('load-todos', async () => {
+  try {
+    const userDataPath = app.getPath('userData');
+    const filePath = join(userDataPath, 'todos.json');
+    // console.log(filePath)
+
+    //new users won't have a todos.json created yet, so create if-else to have at least an array to load and save into
+    if (fs.existsSync(filePath)) {
+      //utf-8 is for text-encoding standard that makes the file's content readable as a string in JS
+      const data = fs.readFileSync(filePath, 'utf-8')
+
+      return JSON.parse(data);
+    }
+
+    return [];
+  } catch (error) {
+    console.error('Error loading todos.json', error)
+    return [];
   }
 })
 

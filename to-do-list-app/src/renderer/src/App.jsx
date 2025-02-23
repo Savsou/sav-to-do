@@ -1,4 +1,5 @@
 import TopBar from "./components/TopBar"
+import TodoList from "./components/TodoList"
 
 function App() {
   // const ipcHandle = () => window.electron.ipcRenderer.send('ping')
@@ -6,9 +7,7 @@ function App() {
   return (
     <>
       <TopBar></TopBar>
-      <h1 class="text-3xl font-bold underline">
-        Hello world!
-      </h1>
+      <TodoList></TodoList>
     </>
   )
 }
