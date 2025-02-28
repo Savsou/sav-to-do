@@ -64,9 +64,9 @@ export default function TodoList() {
     }
 
     return (
-        <div className="bg-red-200 p-5">
-            <h1 className="text-2xl font-bold px-1 underline">To Do List</h1>
-            <ul>
+        <div className="bg-red-600 p-5">
+            <h1 className="text-2xl font-bold px-1 underline bg-yellow-500">To Do List</h1>
+            <ul className="bg-red-400">
                 {todoList.map((todo) => (
                     <li className="flex justify-between my-3 items-center" key={todo.id}>
                         {editTodoId === todo.id ? (

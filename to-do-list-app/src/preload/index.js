@@ -5,6 +5,10 @@ import { electronAPI } from '@electron-toolkit/preload'
 const api = {
   loadTodos: () => ipcRenderer.invoke('load-todos'),
   saveTodos: (todos) => ipcRenderer.send('save-todos', todos),
+
+  //Window control APIs
+  minimizeWindow: () => ipcRenderer.send('minimize-window'),
+  closeWindow: () => ipcRenderer.send('close-window'),
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

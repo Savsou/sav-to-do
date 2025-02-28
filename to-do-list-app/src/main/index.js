@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow, ipcMain, screen } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
@@ -10,12 +10,13 @@ function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     //numbers are in px, electron uses px as default dimensions
-    width: 400,
-    height: 250,
+    width: 1000,
+    height: 600,
     show: false,
     autoHideMenuBar: true,
     //Makes the window frameless
     frame: false,
+    maximizable: false,
     // Tried using the functions below but the maximize button would bug out and no actions further could be done
     // // Hides the default title bar on Mac
     // titleBarStyle: 'hidden',
@@ -45,6 +46,11 @@ function createWindow() {
     return { action: 'deny' }
   })
 
+  // Handle maximize and restore events to fix off-screen issue
+  mainWindow.on('maximize', () => {
+    mainWindow.restore(); // Prevent maximizing on double-click
+  });
+
   // HMR for renderer base on electron-vite cli.
   // Load the remote URL for development or the local html file for production.
   if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
@@ -67,6 +73,19 @@ ipcMain.on('minimize-window', () => {
     currentWindow.minimize()
   }
 })
+
+ipcMain.on('maximize-window', () => {
+  const currentWindow = BrowserWindow.getFocusedWindow();
+  if (currentWindow) {
+    if (currentWindow.isMaximized()) {
+      currentWindow.restore();
+    } else {
+      // currentWindow.maximize();
+      currentWindow.setSize(1000, 600); // Set the window size back to default
+      currentWindow.center(); // Center the window
+    }
+  }
+});
 
 //Create functions that would be useful when the todo list is changed. For instance when adding, editing or removing
 //from the todo list. Have the functions happen in a useEffect
