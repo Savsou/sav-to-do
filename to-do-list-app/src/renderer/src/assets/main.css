@@ -1,5 +1,23 @@
 @import "tailwindcss";
 
+body {
+    background-color: rgb(161, 161, 247);
+}
+
 button {
     cursor: pointer;
+}
+
+.delete-button:hover {
+    color: rgb(255, 3, 3);
+    transition: .3s;
+}
+
+.edit-button:hover {
+    color: rgb(134, 247, 134);
+    transition: .3s;
+}
+
+.add-task-button {
+    font-size: 14px;
 }

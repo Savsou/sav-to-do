@@ -10,8 +10,8 @@ function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     //numbers are in px, electron uses px as default dimensions
-    width: 1000,
-    height: 600,
+    width: 500,
+    height: 400,
     show: false,
     autoHideMenuBar: true,
     //Makes the window frameless

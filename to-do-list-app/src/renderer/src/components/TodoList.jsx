@@ -64,11 +64,11 @@ export default function TodoList() {
     }
 
     return (
-        <div className="bg-red-600 p-5">
+        <div className="bg-red-200 p-5">
             <h1 className="text-2xl font-bold px-1 underline bg-yellow-500">To Do List</h1>
             <ul className="bg-red-400">
                 {todoList.map((todo) => (
-                    <li className="flex justify-between my-3 items-center" key={todo.id}>
+                    <li className="flex justify-between my-3 items-center px-3" key={todo.id}>
                         {editTodoId === todo.id ? (
                             <input
                                 type="text"
@@ -87,23 +87,23 @@ export default function TodoList() {
                                     <button className="bg-red-300" onClick={() => cancelEditTodo()}>Cancel</button>
                                 </>
                             ) : (
-                                <button className="bg-blue-200" onClick={() => startEditTodo(todo.id, todo.text)}>Edit</button>
+                                <button className="edit-button" onClick={() => startEditTodo(todo.id, todo.text)}>Edit</button>
                             )}
-                            <button className="bg-gray-100" onClick={() => deleteTodo(todo.id)}>X</button>
+                            <button className="delete-button" onClick={() => deleteTodo(todo.id)}>X</button>
                         </div>
                     </li>
                 ))}
             </ul>
 
-            <div className="flex justify-between h-12">
+            <div className="flex justify-between h-12 gap-4">
                 <input
-                    className="bg-gray-200 w-full"
+                    className="bg-gray-200 w-full px-4"
                     type="text"
                     value={newTodo}
                     onChange={(e) => setNewTodo(e.target.value)}
                     placeholder="Enter New Task"
                 />
-                <button className="rounded-xl border border-red-500 p-1 w-28" onClick={addTodo}>Add Task</button>
+                <button className="add-task-button rounded-3xl border border-blue-500 p-1 w-28 bg-gray-100" onClick={addTodo}>Add Task</button>
             </div>
         </div>
     )
