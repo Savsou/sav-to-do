@@ -1,9 +1,5 @@
 @import "tailwindcss";
 
-body {
-    background-color: rgb(161, 161, 247);
-}
-
 button {
     cursor: pointer;
 }
@@ -20,4 +16,12 @@ button {
 
 .add-task-button {
     font-size: 14px;
+}
+
+#app-container {
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
 }

@@ -28,7 +28,7 @@ export default function TopBar() {
     return (
         <div id="top-bar-container">
             <nav style={{ WebkitAppRegion: "drag" }}>
-                <div id="top-bar" className="rounded-t-xl bg-blue-400 w-screen h-8">
+                <div id="top-bar" className="bg-blue-400 w-screen h-8 p-1">
                     <span>Top Bar</span>
                 </div>
                 <div id="control-buttons" className="absolute top-1 right-0 pe-2">

@@ -16,7 +16,9 @@ function createWindow() {
     autoHideMenuBar: true,
     //Makes the window frameless
     frame: false,
+    transparent: true,
     maximizable: false,
+    hasShadow: false,
     // Tried using the functions below but the maximize button would bug out and no actions further could be done
     // // Hides the default title bar on Mac
     // titleBarStyle: 'hidden',
